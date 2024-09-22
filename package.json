@@ -88,7 +88,8 @@
     "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "vsce-package": "vsce package"
   },
   "devDependencies": {
     "@types/diff": "^5.2.2",

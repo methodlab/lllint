@@ -4,6 +4,7 @@ node_modules/**
 src/**
 .gitignore
 .yarnrc
+.yarn
 esbuild.js
 vsc-extension-quickstart.md
 **/tsconfig.json
