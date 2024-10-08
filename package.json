@@ -1,7 +1,7 @@
 {
-  "name": "mlint-extension",
-  "displayName": "MLint",
-  "description": "Methodlab smart code formatter",
+  "name": "lllint-extension",
+  "displayName": "LLLint",
+  "description": "AI-powered code linting and formatting using large language models.",
   "version": "0.0.1",
   "publisher": "methodlab",
   "engines": {
@@ -9,69 +9,96 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/methodlab/mlint.git"
+    "url": "https://github.com/methodlab/lllint.git"
   },
   "categories": [
-    "Other"
+    "Linters",
+    "Formatters",
+    "Programming Languages"
   ],
+  "keywords": [
+    "ai",
+    "lint",
+    "linting",
+    "formatting",
+    "code quality",
+    "openai",
+    "language model",
+    "llm"
+  ],
+  "icon": "icon.png",
   "main": "./out/extension.js",
   "contributes": {
-    "views": {
+    "viewsContainers": {
       "panel": [
         {
-          "id": "mlintMain",
-          "name": "MLint"
+          "id": "lllint-panel",
+          "name": "LLLint",
+          "title": "LLLint",
+          "icon": "lightbulb"
+        }
+      ]
+    },
+    "views": {
+      "lllint-panel": [
+        {
+          "id": "lllintMain",
+          "name": "Notes"
         }
       ]
     },
     "commands": [
       {
-        "command": "mlint.smartFormat",
-        "title": "MLint: Smart Format"
+        "command": "lllint.smartFormat",
+        "title": "LLLint: Format Current File"
       },
       {
-        "command": "mlint.editSystemPrompt",
-        "title": "MLint: Edit System Prompt"
+        "command": "lllint.editSystemPrompt",
+        "title": "LLLint: Edit System Prompt"
       },
       {
-        "command": "mlint.editCodingGuidelines",
-        "title": "MLint: Edit Coding Guidelines"
+        "command": "lllint.editCodingGuidelines",
+        "title": "LLLint: Edit Coding Guidelines"
       },
       {
-        "command": "mlint.applyFormatting",
-        "title": "MLint: Apply Formatting Changes"
+        "command": "lllint.applyFormatting",
+        "title": "LLLint: Apply Formatting Changes"
       },
       {
-        "command": "mlint.jumpToLine",
-        "title": "MLint: Jump to Line"
-      },
+        "command": "lllint.renumberCodingGuidelines",
+        "title": "LLLint: Renumber Coding Guidelines"
+      }
+    ],
+    "keybindings": [
       {
-        "command": "mlint.renumberCodingGuidelines",
-        "title": "MLint: Renumber Coding Guidelines"
+        "command": "lllint.applyFormatting",
+        "key": "ctrl+s",
+        "mac": "cmd+s",
+        "when": "editorTextFocus && resourceScheme == lllint-diff"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "mlint.applyFormatting",
-          "when": "resourceScheme == mlint-diff",
+          "command": "lllint.applyFormatting",
+          "when": "resourceScheme == lllint-diff",
           "group": "navigation"
         }
       ]
     },
     "configuration": {
       "type": "object",
-      "title": "MLint Configuration",
+      "title": "LLLint Configuration",
       "properties": {
-        "mlint.apiKey": {
+        "lllint.apiKey": {
           "type": "string",
           "description": "OpenAI API Key",
           "default": ""
         },
-        "mlint.model": {
+        "lllint.model": {
           "type": "string",
           "description": "OpenAI model to use (e.g., gpt-4o, gpt-4o-mini)",
-          "default": "gpt-4o"
+          "default": "gpt-4o-mini"
         }
       }
     }
@@ -89,7 +116,7 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vscode-test",
-    "vsce-package": "vsce package"
+    "vsce-package": "vsce package --no-yarn"
   },
   "devDependencies": {
     "@types/diff": "^5.2.2",

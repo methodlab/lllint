@@ -3,7 +3,7 @@ import { NoteTreeDataProvider } from '../providers/NoteTreeProvider';
 import { closeDiffAndClearNotes } from '../utils';
 
 export async function applyFormatting(diffPanel: vscode.TextEditor | undefined, noteTreeDataProvider: NoteTreeDataProvider) {
-  if (diffPanel && diffPanel.document.uri.scheme === 'mlint-diff') {
+  if (diffPanel && diffPanel.document.uri.scheme === 'lllint-diff') {
     const originalUri = vscode.Uri.parse(diffPanel.document.uri.path);
     const originalDocument = await vscode.workspace.openTextDocument(originalUri);
     const originalEditor = await vscode.window.showTextDocument(originalDocument);

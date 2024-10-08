@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 
-export class MLintCodeLensProvider implements vscode.CodeLensProvider {
+export class LLLintCodeLensProvider implements vscode.CodeLensProvider {
   provideCodeLenses(document: vscode.TextDocument): vscode.CodeLens[] {
-    if (document.uri.scheme !== 'mlint-diff') {
+    if (document.uri.scheme !== 'lllint-diff') {
       return [];
     }
 
@@ -10,11 +10,11 @@ export class MLintCodeLensProvider implements vscode.CodeLensProvider {
     return [
       new vscode.CodeLens(range, {
         title: "Apply Formatting Changes",
-        command: "mlint.applyFormatting"
+        command: "lllint.applyFormatting"
       }),
       new vscode.CodeLens(range, {
         title: "Discard Formatting Changes",
-        command: "mlint.discardFormatting"
+        command: "lllint.discardFormatting"
       })
     ];
   }

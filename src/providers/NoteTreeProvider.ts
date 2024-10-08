@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { jumpToLine } from '../commands/jumpToLine';
 
 export class NoteTreeItem extends vscode.TreeItem {
   constructor(
@@ -16,7 +17,7 @@ export class NoteTreeItem extends vscode.TreeItem {
     if (this.lineNumber) {
       this.description = `line ${this.lineNumber}`;
       this.command = {
-        command: 'mlint.jumpToLine',
+        command: 'lllint.jumpToLine',
         title: 'Jump to Line',
         arguments: [this.lineNumber]
       };
@@ -29,7 +30,7 @@ export class GuidelineItem extends vscode.TreeItem {
     super(label, vscode.TreeItemCollapsibleState.None);
     this.description = message;
     this.command = {
-      command: 'mlint.editCodingGuidelines',
+      command: 'lllint.editCodingGuidelines',
       title: 'Edit Coding Guidelines',
       arguments: [guidelineNumber]
     };
@@ -45,6 +46,15 @@ export class NoteTreeDataProvider implements vscode.TreeDataProvider<vscode.Tree
 
   constructor(private context: vscode.ExtensionContext) {
     this.loadGuidelines();
+    this.registerJumpToLineCommand();
+  }
+
+  private registerJumpToLineCommand() {
+    this.context.subscriptions.push(
+      vscode.commands.registerCommand('lllint.jumpToLine', (lineNumber: number) => {
+        jumpToLine(lineNumber);
+      })
+    );
   }
 
   private loadGuidelines() {
@@ -68,18 +78,23 @@ export class NoteTreeDataProvider implements vscode.TreeDataProvider<vscode.Tree
     if (!element) {
       return Promise.resolve(
         this.notes.map(note => {
+          const guidelineText = this.guidelinesMap.get(note.guidelineNumber);
+          const collapsibleState = guidelineText && guidelineText.trim() !== ''
+            ? vscode.TreeItemCollapsibleState.Collapsed
+            : vscode.TreeItemCollapsibleState.None;
+          
           const noteItem = new NoteTreeItem(
             this.getNoteLabel(note),
-            vscode.TreeItemCollapsibleState.Collapsed,
+            collapsibleState,
             note.lineNumber,
             note.guidelineNumber,
             note.message,
-            this.guidelinesMap.get(note.guidelineNumber)
+            guidelineText
           );
           return noteItem;
         })
       );
-    } else if (element.guidelineText) {
+    } else if (element.guidelineText && element.guidelineText.trim() !== '') {
       const guidelineItem = new GuidelineItem(element.guidelineNumber || '', element.guidelineText, element.guidelineNumber || '');
       guidelineItem.contextValue = 'guideline';
       guidelineItem.iconPath = new vscode.ThemeIcon('arrow-small-right');

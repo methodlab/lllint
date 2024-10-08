@@ -12,6 +12,6 @@ export class FormattedDocumentProvider implements vscode.TextDocumentContentProv
 
   updateContent(content: string) {
     this._content = content;
-    this._onDidChange.fire(vscode.Uri.parse('mlint-diff:formatted'));
+    this._onDidChange.fire(vscode.Uri.parse('lllint-diff:formatted'));
   }
 }

@@ -5,6 +5,10 @@ import { FormattedDocumentProvider } from '../providers/FormattedDocumentProvide
 import { NoteTreeDataProvider } from '../providers/NoteTreeProvider';
 import { formatCodeWithLLM } from '../lib/llm';
 
+function openSettings(filter: string) {
+  vscode.commands.executeCommand('workbench.action.openSettings', filter);
+}
+
 export async function smartFormat(
   context: vscode.ExtensionContext,
   formattedDocumentProvider: FormattedDocumentProvider,
@@ -19,14 +23,20 @@ export async function smartFormat(
   }
 
   const document = editor.document;
-  const originalCode = document.getText();
 
-  const config = vscode.workspace.getConfiguration('mlint');
+  const config = vscode.workspace.getConfiguration('lllint');
   const apiKey = config.get<string>('apiKey');
   const model = config.get<string>('model') || 'gpt-4o-mini';
 
   if (!apiKey) {
-    vscode.window.showErrorMessage('Please set your OpenAI API key in the settings.');
+    const openSettingsAction = 'Open Settings';
+    const result = await vscode.window.showErrorMessage(
+      'Please set your OpenAI API key in the settings.',
+      openSettingsAction
+    );
+    if (result === openSettingsAction) {
+      openSettings('lllint.');
+    }
     return;
   }
 
@@ -46,25 +56,27 @@ export async function smartFormat(
 
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
-    title: "MLint: Smart formatting...",
+    title: "LLLint: Analyzing and formatting...",
     cancellable: false
   }, async () => {
     try {
+      const currentCode = editor.document.getText();
+
       const { formattedCode, notes } = await formatCodeWithLLM(
-        originalCode,
+        currentCode,
         systemPrompt,
         codingGuidelines,
         apiKey,
         model
       );
 
-      const diffTitle = `${document.uri.fsPath} [MLint formatted]`;
+      const diffTitle = `${document.uri.fsPath} [LLLint formatted]`;
 
       // Update the content of the virtual document
       formattedDocumentProvider.updateContent(formattedCode);
 
       // Create a URI for the virtual document
-      const formattedUri = vscode.Uri.parse(`mlint-diff:${document.uri.fsPath}`);
+      const formattedUri = vscode.Uri.parse(`lllint-diff:${document.uri.fsPath}`);
 
       // Show the diff view beside the original document
       await vscode.commands.executeCommand('vscode.diff', document.uri, formattedUri, diffTitle, {

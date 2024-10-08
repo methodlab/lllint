@@ -5,7 +5,7 @@ export async function jumpToLine(lineNumber: number) {
   
   // Find the original (left) editor
   const originalEditor = visibleEditors.find(
-    editor => editor.document.uri.scheme !== 'mlint-diff'
+    editor => editor.document.uri.scheme !== 'lllint-diff'
   );
 
   if (originalEditor) {

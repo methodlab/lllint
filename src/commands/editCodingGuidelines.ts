@@ -6,7 +6,7 @@ export function editCodingGuidelines(context: vscode.ExtensionContext) {
   return async (guidelineNumber?:string) => {
     const promptPath = path.join(context.extensionPath, 'prompts', 'coding-guidelines.md');
     const document = await vscode.workspace.openTextDocument(promptPath);
-    const editor = await vscode.window.showTextDocument(document);
+    const editor = await vscode.window.showTextDocument(document, { viewColumn: vscode.ViewColumn.Beside });
 
     if (guidelineNumber) {
       const content = fs.readFileSync(promptPath, 'utf-8');
