@@ -68,17 +68,6 @@ The core of LLLint is your custom coding guidelines. While we provide a basic se
 
 To edit your guidelines, use the "LLLint: Edit Coding Guidelines" command. The extension includes a simple numbering system to keep your guidelines organized.
 
-## Screenshots
-
-![Intelligent Linting](images/intelligent-linting.png)
-*LLLint suggesting code improvements*
-
-![Diff View](images/diff-view.png)
-*Side-by-side comparison of suggested changes*
-
-![Contextual Notes](images/ai-notes.png)
-*Detailed explanations for suggestions*
-
 ## Support
 
 - **Issues:** [GitHub Issues](https://github.com/methodlab/lllint/issues)
