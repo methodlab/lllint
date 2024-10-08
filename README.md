@@ -8,7 +8,7 @@ LLLint (Large Language Linter) is a VSCode extension that utilizes large languag
 - Learn best practices through AI-powered suggestions
 - Customize linting rules to fit your project's unique needs
 
-LLLint is API-based, currently supporting OpenAI's models, allowing you to harness state-of-the-art language understanding for your code analysis.
+LLLint currently uses OpenAI's API to analyze and suggest improvements for your code.
 
 ## Features
 
@@ -29,7 +29,7 @@ LLLint is API-based, currently supporting OpenAI's models, allowing you to harne
 1. Open VSCode.
 2. Go to Extensions (Ctrl+Shift+X or Cmd+Shift+X).
 3. Search for "LLLint" and click "Install".
-4. Reload VSCode to activate the extension.
+   Alternatively, you can install it directly from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=methodlab.lllint-extension).
 
 ## Usage
 
@@ -77,8 +77,6 @@ To edit your guidelines, use the "LLLint: Edit Coding Guidelines" command. The e
 
 - Ability to cancel requests.
 - Support for OpenRouter and local LLMs.
-
-Stay tuned for these exciting updates!
 
 ## License
 
