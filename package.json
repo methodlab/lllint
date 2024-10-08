@@ -1,8 +1,8 @@
 {
   "name": "lllint-extension",
   "displayName": "LLLint",
-  "description": "AI-powered code linting and formatting using large language models.",
-  "version": "0.0.3",
+  "description": "LLM-based code formatting and linting",
+  "version": "0.0.4",
   "publisher": "methodlab",
   "engines": {
     "vscode": "^1.75.0"
